@@ -32,31 +32,46 @@
              
            constructor(props) {
                super(props);
-               this.state = {counter: 0};
+               this.state = {class: "off", label: "Нажми"};
                  
                this.press = this.press.bind(this);
+               console.log("constructor");
            }
-           incrementCounter(prevState, props) {
-                  return {
-                    counter: prevState.counter + parseInt(props.increment)
-                  };
-            }
+           static getDerivedStateFromProps(props, state) {
+                console.log("getDerivedStateFromProps()");
+                return null;
+           }
+           componentDidMount(){
+               console.log("componentDidMount()");
+           }
+           componentWillUnmount(){
+               console.log("componentWillUnmount()");
+           }
+           shouldComponentUpdate(){
+               console.log("shouldComponentUpdate()");
+               return true;
+           }
+           getSnapshotBeforeUpdate(prevProps, prevState) {
+              console.log("getSnapshotBeforeUpdate()");
+              return null;
+          }
+           componentDidUpdate(){
+               console.log("componentDidUpdate()");
+           }
            press(){
-               this.setState(this.incrementCounter);
-               this.setState(this.incrementCounter);
+               var className = (this.state.class==="off")?"on":"off";
+               this.setState({class: className});
            }
            render() {
-               return <div>
-                            <button onClick={this.press}>Count</button>
-                            <div>Counter: {this.state.counter} <br />Increment: {this.props.increment}</div>
-                        </div>
+               console.log("render()");
+               return <button onClick={this.press} className={this.state.class}>{this.state.label}</button>;
            }
        }
         ReactDOM.createRoot(
             document.getElementById("app")
         )
         .render(
-            <ClickButton increment="1" />
+            <ClickButton />
         );
     </script>
 </body>
